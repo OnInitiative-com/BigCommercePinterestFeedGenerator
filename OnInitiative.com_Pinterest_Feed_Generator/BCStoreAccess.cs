@@ -93,6 +93,39 @@ namespace OnInitiative.com_Pinterest_Feed_Generator
 			
 		}
 
+
+		/// <summary>
+		/// Compares if the created BigCommerceCategoriesCSV file is current with the 
+		/// existing categories in the BigCommerce store.
+		/// </summary>
+		public bool IsBigCommerceCategoryFileLatest(List<CSV_CategoriesWithGoogleClassifications> catBCGoogleList, List<BigCommerceCategory> bcCategoriesList)
+		{
+
+			if (catBCGoogleList.Count != bcCategoriesList.Count)
+				return false;
+
+			IDictionary<int, string> BCGoogleCatDictionary = new Dictionary<int, string>();
+			IDictionary<int, string> BCCatDictionary = new Dictionary<int, string>();
+
+            foreach (var bcgitem in catBCGoogleList)
+            {
+			
+				BCGoogleCatDictionary.Add(Int32.Parse(bcgitem.Id), bcgitem.Name);
+
+			}
+
+			foreach (var bcCatRecord in bcCategoriesList)
+			{
+
+				BCCatDictionary.Add((int)bcCatRecord.Id, bcCatRecord.Category_Name);
+
+			}		
+
+			//check keys and values for equality
+			return (BCGoogleCatDictionary.Keys.SequenceEqual(BCCatDictionary.Keys) && BCGoogleCatDictionary.Keys.All(k => BCGoogleCatDictionary[k].SequenceEqual(BCCatDictionary[k])));
+
+		}
+
 		/// <summary>
 		/// Gets the BigCommerce store name.
 		/// </summary>

@@ -33,7 +33,7 @@ namespace OnInitiative.com_Pinterest_Feed_Generator
             try
             {
                 BCStoreAccess obj = new BCStoreAccess();
-                
+
                 var storeName = obj.GetStoreName();
                 var storeDomain = obj.GetStoreDomain();
                 var storeSafeURL = obj.GetStoreSafeURL();
@@ -42,7 +42,8 @@ namespace OnInitiative.com_Pinterest_Feed_Generator
 
                 bool categoryFileExists = File.Exists(bigcommerceCategoriesCSVPath);
 
-                List<BigCommerceCategory> categories = obj.GetCategoriesV3();
+                //Get only BigCommerce categories that are visible
+                List<BigCommerceCategory> categories = obj.GetCategoriesV3().Where(x => x.IsVisible).ToList();
 
                 if (!categoryFileExists)
                 {
@@ -50,17 +51,14 @@ namespace OnInitiative.com_Pinterest_Feed_Generator
 
                     foreach (var item in categories)
                     {
-                        if (item.IsVisible)
-                        { 
-                            dynamic category = new ExpandoObject();
-                        
-                            category.Id = item.Id;
-                            category.Name = item.Category_Name;
-                            category.Url = item.Category_URL.Url;
-                            category.GoogleProductCategory = "0";
+                        dynamic category = new ExpandoObject();
 
-                            catRecords.Add(category);
-                        }
+                        category.Id = item.Id;
+                        category.Name = item.Category_Name;
+                        category.Url = item.Category_URL.Url;
+                        category.GoogleProductCategory = "0";
+
+                        catRecords.Add(category);
                     }
 
                     using (var writer = new StreamWriter(bigcommerceCategoriesCSVPath))
@@ -82,11 +80,18 @@ namespace OnInitiative.com_Pinterest_Feed_Generator
                     Console.ReadLine();
                     Environment.Exit(0); // --> Breaking the execution at this point.
                 }
-            
+
+                //Checking integrity of BigcommerceCategoriesCSV file
+                List<CSV_CategoriesWithGoogleClassifications> catBCGoogleList = obj.GetCategoriesWithGoogleClassification();
+
+                bool isBigcommerceCategoriesCSVCurrent = obj.IsBigCommerceCategoryFileLatest(catBCGoogleList, categories);
+
+                //If BigcommerceCategoriesCSV file is current, proceed to export BigCommerce catalog to CSV file for Pinterest ingestion.
+                if (!isBigcommerceCategoriesCSVCurrent)
+                    throw new Exception("BigcommerceCategoriesCSV file is not current. Please update.");
+
                 List<BigCommerceProduct> products = obj.GetProductsV3();
 
-                List<CSV_CategoriesWithGoogleClassifications> catBCGoogleList = obj.GetCategoriesWithGoogleClassification();
-                       
                 var prodRecords = new List<dynamic>();
 
                 foreach (var item in products)
@@ -94,7 +99,7 @@ namespace OnInitiative.com_Pinterest_Feed_Generator
                     if (item.IsVisible && item.Type == "physical")
                     {
                         dynamic product = new ExpandoObject();
-                    
+
                         product.id = item.Id;
                         product.title = item.Name;
                         product.description = obj.StripHTML(item.Description);
@@ -126,6 +131,7 @@ namespace OnInitiative.com_Pinterest_Feed_Generator
                 sb.Append(dateAndTime + " ERROR: " + ex.Message);
                 File.AppendAllText(pathFile, sb.ToString());
             }
+
         }
     }
 }
