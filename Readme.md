@@ -5,7 +5,7 @@ this project aims to create the first open-source feed generator for Pinterest u
 BigCommerce store data. 
 
 In doing this, our goal is to present small-business owners with no IT background
-a more affordable yet transparent way for automating the tedious task of export BigCommerce
+a more affordable yet transparent way for automating the tedious task of exporting BigCommerce
 catalog data to their Pinterest business profile. Our gain is to provide customer support at
 inexpensive rates compared to current market rates. Your gain is to know how we do it, so you
 can be independent of depraving monthly-charges with no reason for them to be.
