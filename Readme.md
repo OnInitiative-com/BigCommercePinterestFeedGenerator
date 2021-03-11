@@ -7,7 +7,7 @@ BigCommerce store data.
 By doing this, our goal is to present small-business owners with no IT background,
 a more affordable and transparent tool for automating the tedious task of exporting BigCommerce
 catalog data to their Pinterest business profile. Our gain is to provide customer support at
-inexpensive rates compared to current market rates. Your gain is to know how we do it and be
+inexpensive rates compared to current market rates. Your gain is to know how we do it and being
 independent of depraving monthly-charges with no reason for them to be.
 
 ## Contributing
