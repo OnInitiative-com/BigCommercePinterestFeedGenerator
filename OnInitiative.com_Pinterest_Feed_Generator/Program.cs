@@ -32,18 +32,19 @@ namespace OnInitiative.com_Pinterest_Feed_Generator
 
             try
             {
-                BCStoreAccess obj = new BCStoreAccess();
+                BCStoreAccess BCAccess = new BCStoreAccess();
 
-                var storeName = obj.GetStoreName();
-                var storeDomain = obj.GetStoreDomain();
-                var storeSafeURL = obj.GetStoreSafeURL();
+                var storeName = BCAccess.GetStoreName();
+                var storeDomain = BCAccess.GetStoreDomain();
+                var storeSafeURL = BCAccess.GetStoreSafeURL();
 
                 string bigcommerceCategoriesCSVPath = Directory.GetCurrentDirectory() + "\\BigcommerceCategoriesCSV.csv";
+                string pinterestCatalogCSVPath = Directory.GetCurrentDirectory() + "\\products.csv";
 
                 bool categoryFileExists = File.Exists(bigcommerceCategoriesCSVPath);
 
                 //Get only BigCommerce categories that are visible
-                List<BigCommerceCategory> categories = obj.GetCategoriesV3().Where(x => x.IsVisible).ToList();
+                List<BigCommerceCategory> categories = BCAccess.GetCategoriesV3().Where(x => x.IsVisible).ToList();
 
                 if (!categoryFileExists)
                 {
@@ -81,57 +82,70 @@ namespace OnInitiative.com_Pinterest_Feed_Generator
                     Environment.Exit(0); // --> Breaking the execution at this point.
                 }
 
-                //Checking integrity of BigcommerceCategoriesCSV file
-                List<CSV_CategoriesWithGoogleClassifications> catBCGoogleList = obj.GetCategoriesWithGoogleClassification();
+                //Checking integrity of BigCommerceCategoriesCSV file
+                List<CSV_CategoriesWithGoogleClassifications> catBCGoogleList = BCAccess.GetCategoriesWithGoogleClassification();
 
-                bool isBigcommerceCategoriesCSVCurrent = obj.IsBigCommerceCategoryFileLatest(catBCGoogleList, categories);
-
-                //If BigcommerceCategoriesCSV file is current, proceed to export BigCommerce catalog to CSV file for Pinterest ingestion.
+                bool isBigcommerceCategoriesCSVCurrent = BCAccess.IsBigCommerceWithGoogleCategoryFileLatest(catBCGoogleList, categories);
+                                
                 if (!isBigcommerceCategoriesCSVCurrent)
                     throw new Exception("BigcommerceCategoriesCSV file is not current. Please update.");
 
-                List<BigCommerceProduct> products = obj.GetProductsV3();
+                //Select only "physical" products that are visible 
+                List<BigCommerceProduct> products = BCAccess.GetProductsV3().Where(x => x.Type == "physical" && x.IsVisible).ToList();
 
                 var prodRecords = new List<dynamic>();
 
                 foreach (var item in products)
                 {
-                    if (item.IsVisible && item.Type == "physical")
-                    {
-                        dynamic product = new ExpandoObject();
+                    dynamic product = new ExpandoObject();
 
-                        product.id = item.Id;
-                        product.title = item.Name;
-                        product.description = obj.StripHTML(item.Description);
-                        product.link = storeSafeURL + item.Product_URL;
-                        product.price = item.RetailPrice;
-                        product.sale_price = obj.GetSalePrice(item.SalePrice, item.RetailPrice);
-                        product.availability = obj.GetAvailability(item.Availability);
-                        product.brand = item.BrandName;
-                        product.condition = item.Condition.ToLower();
-                        product.product_type = obj.formatCategoryName(categories.Where(n => n.Id == item.Categories[0]).FirstOrDefault().Category_URL.Url);
-                        product.google_product_category = catBCGoogleList.Where(x => Int32.Parse(x.Id) == item.Categories[0]).FirstOrDefault().GoogleProductCategory;
-
-                        product.GoogleProductCategory = "0";
-                        prodRecords.Add(product);
-                    }
+                    product.id = item.Id;
+                    product.title = item.Name;
+                    product.description = BCAccess.StripHTML(item.Description);
+                    product.link = storeSafeURL + item.Product_URL;
+                    product.price = item.Price;
+                    product.sale_price = BCAccess.GetSalePrice(item.SalePrice, item.Price);
+                    product.availability = BCAccess.GetAvailability(item.Availability);
+                    product.brand = item.BrandName;
+                    product.condition = item.Condition.ToLower();
+                    product.product_type = BCAccess.formatCategoryName(categories.Where(n => n.Id == item.Categories[0]).FirstOrDefault().Category_URL.Url);
+                    product.google_product_category = catBCGoogleList.Where(x => Int32.Parse(x.Id) == item.Categories[0]).FirstOrDefault().GoogleProductCategory;
+                    product.image_link = item.ThumbnailImageURL.StandardUrl;
+                    product.additional_image_link = BCAccess.GetAdditionalImageLinks(item.Main_Images.Where(x => (!x.IsThumbnail)).ToList());                   
+                    
+                    prodRecords.Add(product);
                 }
 
-                using (var writer = new StreamWriter(bigcommerceCategoriesCSVPath))
+                using (var writer = new StreamWriter(pinterestCatalogCSVPath))
                 using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
                 {
                     csv.WriteRecords(prodRecords);
-                }
+                }               
 
-                Console.Read();
+                sb.Append(dateAndTime + " - Job finished OK!\n");
+                File.AppendAllText(pathFile, sb.ToString());
 
+                Console.WriteLine("Store Name: " + storeName);
+                Console.WriteLine("Store URL: " + storeSafeURL);
+                Console.WriteLine("");
+                Console.WriteLine("---------------");
+                Console.WriteLine("");
+                Console.WriteLine("Pinterest catalog file was created successfully. You can now copy the products.csv file created to the Pinterest feed source origin.");
+                Console.WriteLine("");
+                Console.WriteLine("---------------");
+                Console.WriteLine("");
+                Console.Write("Press Enter to exit now...");
+                Console.ReadLine();
             }
             catch (Exception ex)
             {
                 sb.Append(dateAndTime + " ERROR: " + ex.Message);
                 File.AppendAllText(pathFile, sb.ToString());
             }
-
+            finally
+            {
+                sb.Clear();                
+            }
         }
     }
 }

@@ -14,6 +14,7 @@ using LINQtoCSV;
 using Netco.Logging;
 using NUnit.Framework;
 using System.Text.RegularExpressions;
+using System.Text;
 
 namespace OnInitiative.com_Pinterest_Feed_Generator
 {
@@ -98,7 +99,7 @@ namespace OnInitiative.com_Pinterest_Feed_Generator
 		/// Compares if the created BigCommerceCategoriesCSV file is current with the 
 		/// existing categories in the BigCommerce store.
 		/// </summary>
-		public bool IsBigCommerceCategoryFileLatest(List<CSV_CategoriesWithGoogleClassifications> catBCGoogleList, List<BigCommerceCategory> bcCategoriesList)
+		public bool IsBigCommerceWithGoogleCategoryFileLatest(List<CSV_CategoriesWithGoogleClassifications> catBCGoogleList, List<BigCommerceCategory> bcCategoriesList)
 		{
 
 			if (catBCGoogleList.Count != bcCategoriesList.Count)
@@ -123,6 +124,33 @@ namespace OnInitiative.com_Pinterest_Feed_Generator
 
 			//check keys and values for equality
 			return (BCGoogleCatDictionary.Keys.SequenceEqual(BCCatDictionary.Keys) && BCGoogleCatDictionary.Keys.All(k => BCGoogleCatDictionary[k].SequenceEqual(BCCatDictionary[k])));
+
+		}
+
+		/// <summary>
+		/// Gets the list of additional images of a given product.
+		/// </summary>
+		public string GetAdditionalImageLinks(List<BigCommerceImage> productNotThumbnailImagesList)
+		{
+			if (productNotThumbnailImagesList.Count == 0)
+				return String.Empty;
+
+			StringBuilder additionalImageList = new StringBuilder();
+
+			var queue = new Queue<BigCommerceImage>(productNotThumbnailImagesList);
+
+			additionalImageList.Append("\"");
+
+			additionalImageList.Append(queue.Dequeue().UrlStandard);
+
+			while (queue.Count !=0)
+            {
+				additionalImageList.Append("," + queue.Dequeue().UrlStandard);
+			}
+          
+			additionalImageList.Append("\"");
+
+			return additionalImageList.ToString();
 
 		}
 
@@ -170,12 +198,12 @@ namespace OnInitiative.com_Pinterest_Feed_Generator
 		/// <summary>
 		/// Gets Pinterest Sale Price.
 		/// </summary>
-		public string GetSalePrice(decimal? sale_price, decimal? default_price)
+		public string GetSalePrice(decimal? sale_price, decimal? price)
 		{
 
 			string final_price = String.Empty;
 
-			if (sale_price == default_price || sale_price == 0)
+			if (sale_price == price || sale_price == 0)
 				final_price = "";
 			else
 				final_price = sale_price.ToString();
@@ -209,22 +237,12 @@ namespace OnInitiative.com_Pinterest_Feed_Generator
 			TextInfo myTI = new CultureInfo("en-US", false).TextInfo;
             string categoryNameInCaps = myTI.ToTitleCase(source);
 
-			string catNameInCapsWithNoBeginEndSlash = categoryNameInCaps.Substring(2, categoryNameInCaps.Length - 2);
+			string catNameInCapsWithNoBeginEndSlash = categoryNameInCaps.Substring(1, categoryNameInCaps.Length - 2);
 
 			string catNameFormatted = catNameInCapsWithNoBeginEndSlash.Replace("/", " > ");
 
 			return catNameFormatted;
-		}
-
-		public void GetProductsImagesV3()
-		{
-			var service = this.BigCommerceFactory.CreateProductsService(this.ConfigV3);
-			var products = service.GetProducts(true);
-
-			var productWithImages = products.Where(pr => pr.ThumbnailImageURL != null && !string.IsNullOrWhiteSpace(pr.ThumbnailImageURL.StandardUrl));
-
-			
-		}
+		}		
 
 		[Test]
 		public async Task GetProductsV3Async()
@@ -233,17 +251,7 @@ namespace OnInitiative.com_Pinterest_Feed_Generator
 			var products = await service.GetProductsAsync(CancellationToken.None);
 
 			
-		}
-
-		[Test]
-		public async Task GetProductsImagesV3Async()
-		{
-			var service = this.BigCommerceFactory.CreateProductsService(this.ConfigV3);
-			var products = await service.GetProductsAsync(CancellationToken.None);
-						
-			var productWithImages = products.Where(pr => pr.ThumbnailImageURL != null && !string.IsNullOrWhiteSpace(pr.ThumbnailImageURL.StandardUrl));
-			
-		}
+		}	
 
 	}
 }
