@@ -14,7 +14,7 @@ can be independent of depraving monthly-charges with no reason for them to be.
 
 One rule only: *respect the code*. For the rest, bring your ideas, raise issues and push code :-)
 
-## Disclaimer: 
+## Disclaimer
 
 Our solution uses a modified version of the BigCommerceAccess.dll library, which was originally
 obtained from [skuvault/bigCommerceAccess](https://github.com/skuvault/bigCommerceAccess) Github
