@@ -27,3 +27,5 @@ implemented by our team.
 Contact us at [support@oninitiative.com](mailto:support@oninitiative.com) for more information.
 
 Thanks for being here, you're awesome 🙌
+
+[![HitCount](http://hits.dwyl.com/OnInitiative-com/BigCommercePinterestFeedGenerator.svg)](http://hits.dwyl.com/OnInitiative-com/BigCommercePinterestFeedGenerator)
