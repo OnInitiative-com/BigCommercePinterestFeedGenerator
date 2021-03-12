@@ -29,3 +29,6 @@ Contact us at [support@oninitiative.com](mailto:support@oninitiative.com) for mo
 Thanks for being here, you're awesome 🙌
 
 [![HitCount](http://hits.dwyl.com/OnInitiative-com/BigCommercePinterestFeedGenerator.svg)](http://hits.dwyl.com/OnInitiative-com/BigCommercePinterestFeedGenerator)
+[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/OnInitiative-com/BigCommercePinterestFeedGenerator/issues)
+<img src="https://img.shields.io/github/last-commit/OnInitiative-com/BigCommercePinterestFeedGenerator">
+<img src="https://img.shields.io/github/repo-size/OnInitiative-com/BigCommercePinterestFeedGenerator">
