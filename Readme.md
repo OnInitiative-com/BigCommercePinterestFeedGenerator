@@ -16,9 +16,9 @@ One rule only: *respect the code*. For the rest, bring your ideas, raise issues 
 
 ## Disclaimer
 
-The solution uses an enhanced version of [skuvault/bigCommerceAccess](https://github.com/skuvault/bigCommerceAccess) implemented by our team.
+The solution uses an enhanced version of [skuvault/bigCommerceAccess](https://github.com/skuvault/bigCommerceAccess).
 The modified library fully recognizes the license granted by their original authors, and can be accessed
-from the [modified BigCommerceAccess repository](https://github.com/OnInitiative-com/bigCommerceAccess).
+from the [modified BigCommerceAccess repository](https://github.com/OnInitiative-com/bigCommerceAccess) implemented by our team.
 
 ## Ask us any questions or request support now 👋:
 
