@@ -18,13 +18,14 @@ using System.Globalization;
 using static System.Net.Mime.MediaTypeNames;
 using CsvContext = CsvHelper.CsvContext;
 using CsvHelper.Configuration;
+using System.Net;
 
 namespace OnInitiative.com_Pinterest_Feed_Generator
 {
     class Program
     {
 
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             StringBuilder sb = new StringBuilder();
             String pathFile = Directory.GetCurrentDirectory() + "\\PinterestCatalog_JobLog.txt";
@@ -120,31 +121,27 @@ namespace OnInitiative.com_Pinterest_Feed_Generator
                 using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
                 {
                     csv.WriteRecords(prodRecords);
-                }               
+                    csv.Flush();
+                }
 
-                sb.Append(dateAndTime + " - Job finished OK!\n");
-                File.AppendAllText(pathFile, sb.ToString());
+               //Uploading BigCommerce products CSV file to WebDav Server
+                bool uploadSuccessful = await BCAccess.UploadBigCommerceCatalogAsync(pinterestCatalogCSVPath);
 
-                Console.WriteLine("Store Name: " + storeName);
-                Console.WriteLine("Store URL: " + storeSafeURL);
-                Console.WriteLine("");
-                Console.WriteLine("---------------");
-                Console.WriteLine("");
-                Console.WriteLine("Pinterest catalog file was created successfully. You can now copy the products.csv file created to the Pinterest feed source origin.");
-                Console.WriteLine("");
-                Console.WriteLine("---------------");
-                Console.WriteLine("");
-                Console.Write("Press Enter to exit now...");
-                Console.ReadLine();
+                if (uploadSuccessful)
+                {
+                    sb.Append(dateAndTime + " - Job finished OK for store " + storeName + "\n");
+                    File.AppendAllText(pathFile, sb.ToString());
+                }
+               
             }
             catch (Exception ex)
             {
-                sb.Append(dateAndTime + " ERROR: " + ex.Message);
+                sb.Append(dateAndTime + " ERROR: " + ex.Message + "\n");
                 File.AppendAllText(pathFile, sb.ToString());
             }
             finally
             {
-                sb.Clear();                
+               sb.Clear();                
             }
         }
     }

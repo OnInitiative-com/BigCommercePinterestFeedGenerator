@@ -15,6 +15,11 @@ using Netco.Logging;
 using NUnit.Framework;
 using System.Text.RegularExpressions;
 using System.Text;
+using System.Net;
+using WebDav;
+using System.Diagnostics;
+using System.Net.Http;
+using System.Net.Http.Headers;
 
 namespace OnInitiative.com_Pinterest_Feed_Generator
 {
@@ -242,15 +247,54 @@ namespace OnInitiative.com_Pinterest_Feed_Generator
 			string catNameFormatted = catNameInCapsWithNoBeginEndSlash.Replace("/", " > ");
 
 			return catNameFormatted;
-		}		
+		}
+
+		/// <summary>
+		/// Uploads BigCommerce products CSV file to the store WebDav server.
+		/// </summary>
+		public async Task<bool> UploadBigCommerceCatalogAsync(string catalogFilePath)
+		{
+			try
+			{
+				string credentialsFilePath = Directory.GetCurrentDirectory() + "\\BigCommerceCredentials.csv";
+
+				var cc = new CsvContext();
+
+				var csvFileAccess = cc.Read<CSV_StoreCredentialParameters>(credentialsFilePath, new CsvFileDescription { FirstLineHasColumnNames = true, IgnoreUnknownColumns = true }).FirstOrDefault();
+
+				if (csvFileAccess != null)
+				{
+
+					var clientParams = new WebDavClientParams
+					{
+						BaseAddress = new Uri(csvFileAccess.WebDavPath),
+						Credentials = new NetworkCredential(csvFileAccess.WebDavUsername, csvFileAccess.WebDavPassword),
+						
+					};
+
+                    using (var client = new WebDavClient(clientParams))
+                    {
+						// Content headers need to be set directly on HttpContent instance.
+						var content = new StreamContent(File.OpenRead(catalogFilePath));
+						content.Headers.ContentRange = new ContentRangeHeaderValue(0, 2);
+						var result = await client.PutFile(csvFileAccess.WebDavPath + "/content/product_feed.csv", File.OpenRead(catalogFilePath), "text/csv"); // upload resource
+					}
+                }
+
+				return true;
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+
+		}
 
 		[Test]
 		public async Task GetProductsV3Async()
 		{
 			var service = this.BigCommerceFactory.CreateProductsService(this.ConfigV3);
-			var products = await service.GetProductsAsync(CancellationToken.None);
-
-			
+			var products = await service.GetProductsAsync(CancellationToken.None);			
 		}	
 
 	}
