@@ -6,7 +6,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using BigCommerceAccess;
-using BigCommerceAccess.Misc;
 using BigCommerceAccess.Models.Configuration;
 using BigCommerceAccess.Models.Product;
 using BigCommerceAccess.Models.Category;
@@ -17,7 +16,6 @@ using System.Text.RegularExpressions;
 using System.Text;
 using System.Net;
 using WebDav;
-using System.Diagnostics;
 using System.Net.Http;
 using System.Net.Http.Headers;
 

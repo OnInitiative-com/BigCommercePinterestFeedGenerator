@@ -3,22 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BigCommerceAccess;
-using BigCommerceAccess.Misc;
-using BigCommerceAccess.Models.Configuration;
 using BigCommerceAccess.Models.Product;
 using BigCommerceAccess.Models.Category;
-using LINQtoCSV;
-using Netco.Logging;
-using NUnit.Framework;
 using System.IO;
 using System.Dynamic;
 using CsvHelper;
 using System.Globalization;
-using static System.Net.Mime.MediaTypeNames;
-using CsvContext = CsvHelper.CsvContext;
-using CsvHelper.Configuration;
-using System.Net;
 
 namespace OnInitiative.com_Pinterest_Feed_Generator
 {
