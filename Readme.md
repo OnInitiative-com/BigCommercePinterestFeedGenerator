@@ -1,14 +1,12 @@
 # BigCommerce-Pinterest-Feed-Generator
 
-Despite many paid solutions that use recurring monthly charges for their customers,
 BigCommerce-Pinterest-Feed-Generator is the first open-source feed generator for Pinterest using
 BigCommerce store data. 
 
-By doing this, our goal is to present small-business owners with no IT background,
-a more affordable and transparent tool for automating the tedious task of exporting BigCommerce
-catalog data to their Pinterest business profile. Our gain is to provide customer support at
-inexpensive rates compared to current market rates. Your gain is to know how we do it and being
-independent of depraving monthly-charges with no reason for them to be.
+Our goal is to present small-business owners with no IT background a more affordable and transparent
+tool for automating the tedious task of exporting BigCommerce catalog data to their Pinterest business
+profile. Our gain is to provide customer support at inexpensive rates compared to current market rates.
+Your gain is to know how we do it and being free of depraving monthly-charges from existing paid solutions.
 
 ## Contributing
 
