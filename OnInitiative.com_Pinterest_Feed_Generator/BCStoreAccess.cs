@@ -275,11 +275,13 @@ namespace OnInitiative.com_Pinterest_Feed_Generator
 						// Content headers need to be set directly on HttpContent instance.
 						var content = new StreamContent(File.OpenRead(catalogFilePath));
 						content.Headers.ContentRange = new ContentRangeHeaderValue(0, 2);
-						var result = await client.PutFile(csvFileAccess.WebDavPath + "/content/product_feed.csv", File.OpenRead(catalogFilePath), "text/csv"); // upload resource
+						var result = await client.PutFile(csvFileAccess.WebDavPath + "/content/products.csv", File.OpenRead(catalogFilePath), "text/csv"); // upload resource
 					}
-                }
 
-				return true;
+					return true;
+				}
+
+				throw new Exception("UploadBigCommerceCatalogAsync -> Could not read the authentication file.");
 			}
 			catch (Exception ex)
 			{
