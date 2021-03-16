@@ -24,5 +24,8 @@ namespace OnInitiative.com_Pinterest_Feed_Generator
 
 		[CsvColumn(Name = "WebDavPassword", FieldIndex = 7)]
 		public string WebDavPassword { get; set; }
+
+		[CsvColumn(Name = "PinterestFeedFileName", FieldIndex = 8)]
+		public string PinterestFeedFileName { get; set; }
 	}
 }
