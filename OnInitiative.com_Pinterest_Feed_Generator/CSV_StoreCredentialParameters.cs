@@ -2,6 +2,8 @@
 
 namespace OnInitiative.com_Pinterest_Feed_Generator
 {
+	//This class will store the columns from the CSV file that contains
+	//auth credentials and other important parameters for the job to work.
 	internal class CSV_StoreCredentialParameters
 	{
 		[CsvColumn(Name = "ApiKey", FieldIndex = 1)]
