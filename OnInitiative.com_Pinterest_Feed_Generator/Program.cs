@@ -14,7 +14,6 @@ namespace OnInitiative.com_Pinterest_Feed_Generator
 {
     class Program
     {
-
         static async Task Main(string[] args)
         {
             StringBuilder sb = new StringBuilder();
@@ -82,7 +81,7 @@ namespace OnInitiative.com_Pinterest_Feed_Generator
                     throw new Exception("BigcommerceCategoriesCSV file is not current. Please update.");
 
                 //Select only "physical" products that are visible 
-                List<BigCommerceProduct> products = BCAccess.GetProductsV3().Where(x => x.Type == "physical" && x.IsVisible).ToList();
+                List<BigCommerceProduct> products = BCAccess.GetProductsV3().Where(x => x.ProductType == "physical" && x.IsProductVisible).ToList();
 
                 var prodRecords = new List<dynamic>();
 
@@ -102,8 +101,8 @@ namespace OnInitiative.com_Pinterest_Feed_Generator
                     product.product_type = BCAccess.formatCategoryName(categories.Where(n => n.Id == item.Categories[0]).FirstOrDefault().Category_URL.Url);
                     product.google_product_category = catBCGoogleList.Where(x => Int32.Parse(x.Id) == item.Categories[0]).FirstOrDefault().GoogleProductCategory;
                     product.image_link = item.ThumbnailImageURL.StandardUrl;
-                    product.additional_image_link = BCAccess.GetAdditionalImageLinks(item.Main_Images.Where(x => (!x.IsThumbnail)).ToList());                   
-                    
+                    product.additional_image_link = BCAccess.GetAdditionalImageLinks(item.Main_Images.Where(x => (!x.IsThumbnail)).ToList());
+
                     prodRecords.Add(product);
                 }
 

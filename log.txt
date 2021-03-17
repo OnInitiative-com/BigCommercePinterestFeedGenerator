@@ -1,0 +1,9 @@
+2021-03-17 10:58:30.798 -04:00 [INF] MSBuild registered from C:\Program Files\dotnet\sdk\5.0.201\
+2021-03-17 10:58:31.046 -04:00 [INF] Registered 1 extensions:
+	Default extension
+2021-03-17 10:58:33.842 -04:00 [INF] Initializing upgrade step Select an entrypoint
+2021-03-17 10:58:33.846 -04:00 [INF] Setting entrypoint to only project in solution: C:\Users\jalug\source\repos\OnInitiative.com_Pinterest_Feed_Generator\OnInitiative.com_Pinterest_Feed_Generator\BigCommercePinterestFeedGenerator.csproj
+2021-03-17 10:58:33.847 -04:00 [INF] Initializing upgrade step Select project to upgrade
+2021-03-17 10:58:33.848 -04:00 [INF] Setting only project in solution as the current project: C:\Users\jalug\source\repos\OnInitiative.com_Pinterest_Feed_Generator\OnInitiative.com_Pinterest_Feed_Generator\BigCommercePinterestFeedGenerator.csproj
+2021-03-17 10:58:33.849 -04:00 [INF] Initializing upgrade step Back up project
+2021-03-17 10:59:46.638 -04:00 [INF] Applying upgrade step Back up project

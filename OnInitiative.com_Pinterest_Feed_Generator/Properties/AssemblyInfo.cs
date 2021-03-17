@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("OnInitiative.com")]
 [assembly: AssemblyProduct("BigCommerce Pinterest Feed Generator")]
-[assembly: AssemblyCopyright("Copyright © 2021")]
+[assembly: AssemblyCopyright("Copyright © 2021 OnInitiative.com")]
 [assembly: AssemblyTrademark("OnInitiative.com")]
 [assembly: AssemblyCulture("")]
 

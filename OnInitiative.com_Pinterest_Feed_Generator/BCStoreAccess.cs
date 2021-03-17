@@ -11,7 +11,6 @@ using BigCommerceAccess.Models.Product;
 using BigCommerceAccess.Models.Category;
 using LINQtoCSV;
 using Netco.Logging;
-using NUnit.Framework;
 using System.Text.RegularExpressions;
 using System.Text;
 using System.Net;
@@ -92,8 +91,8 @@ namespace OnInitiative.com_Pinterest_Feed_Generator
 			}
             catch (Exception ex)
             {
-                throw ex;
-            }
+				throw new Exception(ex.Message);
+			}
 			
 		}
 
@@ -285,17 +284,10 @@ namespace OnInitiative.com_Pinterest_Feed_Generator
 			}
 			catch (Exception ex)
 			{
-				throw ex;
+				throw new Exception(ex.Message);
 			}
 
 		}
-
-		[Test]
-		public async Task GetProductsV3Async()
-		{
-			var service = this.BigCommerceFactory.CreateProductsService(this.ConfigV3);
-			var products = await service.GetProductsAsync(CancellationToken.None);			
-		}	
 
 	}
 }
