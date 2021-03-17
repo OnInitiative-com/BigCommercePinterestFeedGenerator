@@ -18,7 +18,7 @@ Your gain is to know how we do it and being free of depraving monthly-charges fr
 
 One rule only: *respect the code*. For the rest, bring your ideas, raise issues and push code :-)
 
-## Disclaimer
+## Attribution
 
 The solution uses an enhanced version of [skuvault/bigCommerceAccess](https://github.com/skuvault/bigCommerceAccess).
 The modified library fully recognizes the license granted by their original authors, and can be accessed
