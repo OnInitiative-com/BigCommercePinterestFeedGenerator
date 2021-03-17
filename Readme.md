@@ -27,4 +27,4 @@ Thanks for being here, you're awesome 🙌
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/OnInitiative-com/BigCommercePinterestFeedGenerator/issues)
 <img src="https://img.shields.io/github/repo-size/OnInitiative-com/BigCommercePinterestFeedGenerator">
 [![License](https://img.shields.io/github/license/OnInitiative-com/BigCommercePinterestFeedGenerator)](#)
-[![Twitter](https://img.shields.io/twitter/url?style=social)]
+https://img.shields.io/twitter/url?style=social
