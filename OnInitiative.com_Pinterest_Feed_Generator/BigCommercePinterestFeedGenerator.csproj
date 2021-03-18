@@ -13,12 +13,13 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <ApplicationRevision>1</ApplicationRevision>    
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <UseApplicationTrust>false</UseApplicationTrust>
-    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <UseApplicationTrust>false</UseApplicationTrust>	
+	<BootstrapperEnabled>true</BootstrapperEnabled>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+	<PackageVersion>1.5.0</PackageVersion>
+	<PackageDescription>Creates CSV file containing the BigCommerce store's products to be used by Pinterest to populate the business catalog. The created CSV will be automatically uploaded to the BigCommerce store's WebDav server.</PackageDescription>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>AppOfficialIcon.ico</ApplicationIcon>
@@ -29,9 +30,12 @@
     <PackageProjectUrl>https://github.com/OnInitiative-com/BigCommercePinterestFeedGenerator</PackageProjectUrl>
     <RepositoryUrl>https://github.com/OnInitiative-com/BigCommercePinterestFeedGenerator</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
-    <PackageTags>pinterest; bigcommerce</PackageTags>
+    <PackageTags>pinterest, bigcommerce</PackageTags>
     <Authors>ON INITIATIVE LLC</Authors>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <PackageIcon>github_logo.png</PackageIcon>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <PackageId>BigCommercePinterestFeed</PackageId>
   </PropertyGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
@@ -71,6 +75,10 @@
     <ProjectReference Include="..\..\bigCommerceAccessFork\src\BigCommerceAccess\BigCommerceAccess.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\..\..\OneDrive\Documents\On-Initiative\Website\Marketing\Github\github_logo.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
     <None Include="..\LICENSE.txt">
       <Pack>True</Pack>
       <PackagePath></PackagePath>

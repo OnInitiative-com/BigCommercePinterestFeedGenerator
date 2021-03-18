@@ -73,9 +73,10 @@ namespace OnInitiative.com_Pinterest_Feed_Generator
                     Environment.Exit(0); // --> Breaking the execution at this point.
                 }
 
-                //Checking integrity of BigCommerceCategoriesCSV file
+                //Reading filled BigCommerce's categories file with Google classification.
                 List<CSV_CategoriesWithGoogleClassifications> catBCGoogleList = BCAccess.GetCategoriesWithGoogleClassification();
 
+                //Checking integrity of BigCommerceCategoriesCSV file
                 bool isBigcommerceCategoriesCSVCurrent = BCAccess.IsBigCommerceWithGoogleCategoryFileLatest(catBCGoogleList, categories);
                                 
                 if (!isBigcommerceCategoriesCSVCurrent)

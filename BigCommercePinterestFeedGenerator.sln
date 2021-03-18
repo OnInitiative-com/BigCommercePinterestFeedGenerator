@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BigCommercePinterestFeedGenerator", "OnInitiative.com_Pinterest_Feed_Generator\BigCommercePinterestFeedGenerator.csproj", "{8BAE0BA6-9F19-469E-BE15-A4F63AEAF68C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BigCommercePinterestFeedGenerator", "OnInitiative.com_Pinterest_Feed_Generator\BigCommercePinterestFeedGenerator.csproj", "{8BAE0BA6-9F19-469E-BE15-A4F63AEAF68C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BigCommerceAccess", "..\bigCommerceAccessFork\src\BigCommerceAccess\BigCommerceAccess.csproj", "{2FAF71F9-3AD0-4C45-875F-78CA9F7B2FDA}"
 EndProject
