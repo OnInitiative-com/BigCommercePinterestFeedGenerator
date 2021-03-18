@@ -7,17 +7,13 @@
 [![License](https://img.shields.io/github/license/OnInitiative-com/BigCommercePinterestFeedGenerator)](#)
 <a href="https://twitter.com/intent/tweet?text=Wow:&url=https%3A%2F%2Fgithub.com%2FOnInitiative-com%2FBigCommercePinterestFeedGenerator"><img alt="Twitter" src="https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Ftwitter.com%2FOninitiativeC"></a>
 
-<p align="justify">
   BigCommerce-Pinterest-Feed-Generator is the first open-source feed generator for Pinterest using
   BigCommerce store data. 
-</p>
-
-<p align="justify">
+  
   Our goal is to present small-business owners with no IT background a more affordable and transparent
   tool for automating the tedious task of exporting BigCommerce catalog data to their Pinterest business
   profile. Our gain is to provide customer support at inexpensive rates compared to current market rates.
   Your gain is to know how we do it and being free of depraving monthly-charges from existing paid solutions.
-</p>
 
 ## Contributing
 
