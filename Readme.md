@@ -3,15 +3,20 @@
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/OnInitiative-com/BigCommercePinterestFeedGenerator/issues)
 [![Repo Size](https://img.shields.io/github/repo-size/OnInitiative-com/BigCommercePinterestFeedGenerator)](#)
 [![License](https://img.shields.io/github/license/OnInitiative-com/BigCommercePinterestFeedGenerator)](#)
+<a href="https://github.com/OnInitiative-com/BigCommercePinterestFeedGenerator"><img alt="GitHub Clones" src="https://img.shields.io/badge/dynamic/json?color=success&label=Clone&query=count&url=https://raw.githubusercontent.com/OnInitiative-com/BigCommercePinterestFeedGenerator/master/clone.json?raw=True&logo=github"></a>
 <a href="https://twitter.com/intent/tweet?text=Wow:&url=https%3A%2F%2Fgithub.com%2FOnInitiative-com%2FBigCommercePinterestFeedGenerator"><img alt="Twitter" src="https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Ftwitter.com%2FOninitiativeC"></a>
 
-BigCommerce-Pinterest-Feed-Generator is the first open-source feed generator for Pinterest using
-BigCommerce store data. 
+<p align="justify">
+  BigCommerce-Pinterest-Feed-Generator is the first open-source feed generator for Pinterest using
+  BigCommerce store data. 
+</p>
 
-Our goal is to present small-business owners with no IT background a more affordable and transparent
-tool for automating the tedious task of exporting BigCommerce catalog data to their Pinterest business
-profile. Our gain is to provide customer support at inexpensive rates compared to current market rates.
-Your gain is to know how we do it and being free of depraving monthly-charges from existing paid solutions.
+<p align="justify">
+  Our goal is to present small-business owners with no IT background a more affordable and transparent
+  tool for automating the tedious task of exporting BigCommerce catalog data to their Pinterest business
+  profile. Our gain is to provide customer support at inexpensive rates compared to current market rates.
+  Your gain is to know how we do it and being free of depraving monthly-charges from existing paid solutions.
+</p>
 
 ## Contributing
 
