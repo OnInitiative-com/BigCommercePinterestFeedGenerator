@@ -22,16 +22,17 @@ namespace OnInitiative.com_Pinterest_Feed_Generator
 
             try
             {
-                BCStoreAccess BCAccess = new BCStoreAccess();
+                BigCommerceStoreAccess BCAccess = new BigCommerceStoreAccess();
 
                 var storeName = BCAccess.GetStoreName();
                 var storeDomain = BCAccess.GetStoreDomain();
                 var storeSafeURL = BCAccess.GetStoreSafeURL();
 
-                string bigcommerceCategoriesCSVPath = Directory.GetCurrentDirectory() + "\\BigcommerceCategoriesCSV.csv";
-                string pinterestCatalogCSVPath = Directory.GetCurrentDirectory() + "\\products.csv";
+                BCAccess.CredentialsFilePath = Directory.GetCurrentDirectory() + "\\BigCommerceCredentials.csv";
+                BCAccess.CategoriesCSVPath = Directory.GetCurrentDirectory() + "\\BigCommerceCategoriesCSV.csv";                
+                BCAccess.PinterestCatalogCSVPath = Directory.GetCurrentDirectory() + "\\products.csv";
 
-                bool categoryFileExists = File.Exists(bigcommerceCategoriesCSVPath);
+                bool categoryFileExists = File.Exists(BCAccess.CategoriesCSVPath);
 
                 //Get only BigCommerce categories that are visible
                 List<BigCommerceCategory> categories = BCAccess.GetCategoriesV3().Where(x => x.IsVisible).ToList();
@@ -52,7 +53,7 @@ namespace OnInitiative.com_Pinterest_Feed_Generator
                         catRecords.Add(category);
                     }
 
-                    using (var writer = new StreamWriter(bigcommerceCategoriesCSVPath))
+                    using (var writer = new StreamWriter(BCAccess.CategoriesCSVPath))
                     using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
                     {
                         csv.WriteRecords(catRecords);
@@ -106,7 +107,7 @@ namespace OnInitiative.com_Pinterest_Feed_Generator
                     prodRecords.Add(product);
                 }
 
-                using (var writer = new StreamWriter(pinterestCatalogCSVPath))
+                using (var writer = new StreamWriter(BCAccess.PinterestCatalogCSVPath))
                 using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
                 {
                     csv.WriteRecords(prodRecords);
@@ -114,11 +115,11 @@ namespace OnInitiative.com_Pinterest_Feed_Generator
                 }
 
                //Uploading BigCommerce products CSV file to WebDav Server
-                bool uploadSuccessful = await BCAccess.UploadBigCommerceCatalogAsync(pinterestCatalogCSVPath);
+                bool uploadSuccessful = await BCAccess.UploadBigCommerceCatalogAsync(BCAccess.PinterestCatalogCSVPath);
 
                 if (uploadSuccessful)
                 {
-                    sb.Append(dateAndTime + " - Job finished OK for store " + storeName + "\n");
+                    sb.Append(dateAndTime + " - BigCommerce's Pinterest catalog exported OK for store " + storeName + "\n");
                     File.AppendAllText(pathFile, sb.ToString());
                 }
                

@@ -3,7 +3,6 @@ using System.Globalization;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using BigCommerceAccess;
 using BigCommerceAccess.Models.Configuration;
@@ -20,28 +19,44 @@ using System.Net.Http.Headers;
 
 namespace OnInitiative.com_Pinterest_Feed_Generator
 {
-    internal class BCStoreAccess
+    internal class BigCommerceStoreAccess
     {
 
         private readonly IBigCommerceFactory BigCommerceFactory = new BigCommerceFactory();
         private BigCommerceConfig ConfigV3;
 
-        public BCStoreAccess()
+		/// <summary>
+		/// Gets or Sets the BigCommerce crendentials file path.
+		/// </summary>
+		public string CredentialsFilePath { get; set; }
+
+		/// <summary>
+		/// Gets or Sets the BigCommerce categories file path.
+		/// </summary>
+		public string CategoriesCSVPath	{ get; set; }
+
+		/// <summary>
+		/// Gets or Sets the Pinterest's catalog file path.
+		/// </summary>
+		public string PinterestCatalogCSVPath { get; set; }
+
+		public BigCommerceStoreAccess()
         {
             NetcoLogger.LoggerFactory = new NullLoggerFactory();
 
-            string credentialsFilePath = Directory.GetCurrentDirectory() + "\\BigCommerceCredentials.csv";
-
             var cc = new CsvContext();
 
-            var csvFileAccess = cc.Read<CSV_StoreCredentialParameters>(credentialsFilePath, new CsvFileDescription { FirstLineHasColumnNames = true, IgnoreUnknownColumns = true }).FirstOrDefault();
+            var csvFileAccess = cc.Read<CSV_StoreCredentialParameters>(this.CredentialsFilePath, new CsvFileDescription { FirstLineHasColumnNames = true, IgnoreUnknownColumns = true }).FirstOrDefault();
 
             if (csvFileAccess != null)
             {
                 this.ConfigV3 = new BigCommerceConfig(csvFileAccess.ShortShopName, csvFileAccess.ClientId, csvFileAccess.ClientSecret, csvFileAccess.ApiKey);
             }
-        }	
+        }
 
+		/// <summary>
+		/// Gets the list of Products from the BigCommerce store.
+		/// </summary>
 		public List<BigCommerceProduct> GetProductsV3()
 		{
 			var service = this.BigCommerceFactory.CreateProductsService(this.ConfigV3);
@@ -50,6 +65,9 @@ namespace OnInitiative.com_Pinterest_Feed_Generator
 			return products;
 		}
 
+		/// <summary>
+		/// Gets the list of Categories from the BigCommerce store.
+		/// </summary>
 		public List<BigCommerceCategory> GetCategoriesV3()
 		{
 			var service = this.BigCommerceFactory.CreateCategoriesService(this.ConfigV3);
@@ -64,14 +82,13 @@ namespace OnInitiative.com_Pinterest_Feed_Generator
 		public List<CSV_CategoriesWithGoogleClassifications> GetCategoriesWithGoogleClassification()
 		{
             try
-            {
-				string credentialsFilePath = Directory.GetCurrentDirectory() + "\\BigcommerceCategoriesCSV.csv";
+            {			
 
 				List<CSV_CategoriesWithGoogleClassifications> catList = new List<CSV_CategoriesWithGoogleClassifications>();
 
 				var cc = new CsvContext();
 
-				var csvCategoriesCompleted = cc.Read<CSV_CategoriesWithGoogleClassifications>(credentialsFilePath, new CsvFileDescription { FirstLineHasColumnNames = true, IgnoreUnknownColumns = true });
+				var csvCategoriesCompleted = cc.Read<CSV_CategoriesWithGoogleClassifications>(this.CategoriesCSVPath, new CsvFileDescription { FirstLineHasColumnNames = true, IgnoreUnknownColumns = true });
 
 				if (csvCategoriesCompleted != null)
 				{
@@ -173,9 +190,9 @@ namespace OnInitiative.com_Pinterest_Feed_Generator
 		public string GetStoreDomain()
         {
             var service = this.BigCommerceFactory.CreateProductsService(this.ConfigV3);
-            var name = service.GetStoreDomain();
+            var storeDomain = service.GetStoreDomain();
 
-            return name;
+            return storeDomain;
         }
 
 		/// <summary>
@@ -184,9 +201,9 @@ namespace OnInitiative.com_Pinterest_Feed_Generator
 		public string GetStoreSafeURL()
 		{
 			var service = this.BigCommerceFactory.CreateProductsService(this.ConfigV3);
-			var name = service.GetStoreSafeURL();
+			var storeSafeURL = service.GetStoreSafeURL();
 
-			return name;
+			return storeSafeURL;
 		}
 
 		/// <summary>
@@ -214,7 +231,7 @@ namespace OnInitiative.com_Pinterest_Feed_Generator
 		}
 
 		/// <summary>
-		/// Get Availability Pinterest parameter value.
+		/// Get Availability's Pinterest parameter value.
 		/// </summary>
 		public string GetAvailability(string bc_availability)
 		{
@@ -247,17 +264,15 @@ namespace OnInitiative.com_Pinterest_Feed_Generator
 		}
 
 		/// <summary>
-		/// Uploads BigCommerce products CSV file to the store WebDav server.
+		/// Uploads BigCommerce products CSV file to the store's WebDav server.
 		/// </summary>
 		public async Task<bool> UploadBigCommerceCatalogAsync(string catalogFilePath)
 		{
 			try
 			{
-				string credentialsFilePath = Directory.GetCurrentDirectory() + "\\BigCommerceCredentials.csv";
-
 				var cc = new CsvContext();
 
-				var csvFileAccess = cc.Read<CSV_StoreCredentialParameters>(credentialsFilePath, new CsvFileDescription { FirstLineHasColumnNames = true, IgnoreUnknownColumns = true }).FirstOrDefault();
+				var csvFileAccess = cc.Read<CSV_StoreCredentialParameters>(this.CredentialsFilePath, new CsvFileDescription { FirstLineHasColumnNames = true, IgnoreUnknownColumns = true }).FirstOrDefault();
 
 				if (csvFileAccess != null)
 				{
@@ -265,8 +280,7 @@ namespace OnInitiative.com_Pinterest_Feed_Generator
 					var clientParams = new WebDavClientParams
 					{
 						BaseAddress = new Uri(csvFileAccess.WebDavPath),
-						Credentials = new NetworkCredential(csvFileAccess.WebDavUsername, csvFileAccess.WebDavPassword),
-						
+						Credentials = new NetworkCredential(csvFileAccess.WebDavUsername, csvFileAccess.WebDavPassword)						
 					};
 
                     using (var client = new WebDavClient(clientParams))
