@@ -2,7 +2,7 @@
 
 namespace OnInitiative.com_Pinterest_Feed_Generator
 {
-	internal class CSV_CategoriesWithGoogleClassifications
+	public class CSV_CategoriesWithGoogleClassifications
 	{
 		[CsvColumn(Name = "Id", FieldIndex = 1)]
 		public string Id { get; set; }
