@@ -85,8 +85,8 @@ namespace TestProject
                 if (!isBigcommerceCategoriesCSVCurrent)
                     throw new Exception("BigcommerceCategoriesCSV file is not current. Please update.");
                 
-                //Saving generated Pinterest products catalog to local file
-                BCAccess.SaveProducts(storeName, BCAccess.GetProducts(), categories, catBCGoogleList, BCAccess.PinterestCatalogCSVPath);
+                //Saving Pinterest product's feed to local file
+                BCAccess.SaveProducts(storeSafeURL, BCAccess.GetProducts(), categories, catBCGoogleList, BCAccess.PinterestCatalogCSVPath);
 
                 //Uploading BigCommerce products CSV file to WebDav Server
                 bool uploadSuccessful = await BCAccess.UploadBigCommerceCatalogAsync(BCAccess.PinterestCatalogCSVPath);
