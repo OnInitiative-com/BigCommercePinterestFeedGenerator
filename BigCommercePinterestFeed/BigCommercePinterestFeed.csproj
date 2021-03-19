@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-	  <PackageVersion>1.7.0</PackageVersion>
-	  <PackageDescription>Creates CSV file with the BigCommerce store's products to be used by Pinterest to populate the catalog. The created file is automatically uploaded to the BigCommerce store's WebDav server.</PackageDescription>
+	  <PackageVersion>1.8.0</PackageVersion>
+	  <PackageDescription>Creates CSV file with the BigCommerce store's products to be used by Pinterest to populate the catalog. Allows files to be uploaded to the BigCommerce WebDav server.</PackageDescription>
 	  <SignManifests>false</SignManifests>
 	  <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 	  <PackageProjectUrl>https://github.com/OnInitiative-com/BigCommercePinterestFeedGenerator</PackageProjectUrl>
@@ -16,10 +16,10 @@
 	  <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
 	  <PackageId>BigCommercePinterestFeed</PackageId>
 	  <Company>OnInitiative.com</Company>
-	  <Description>Creates CSV file with the BigCommerce store's products to be used by Pinterest to populate the catalog. The created file is automatically uploaded to the BigCommerce store's WebDav server.</Description>
-	  <AssemblyVersion>1.7.0.0</AssemblyVersion>
-	  <FileVersion>1.7.0.0</FileVersion>
-	  <Version>1.7.0</Version>
+	  <Description>Creates CSV file with the BigCommerce store's products to be used by Pinterest to populate the catalog. Allows files to be uploaded to the BigCommerce WebDav server.</Description>
+	  <AssemblyVersion>1.8.0.0</AssemblyVersion>
+	  <FileVersion>1.8.0.0</FileVersion>
+	  <Version>1.8.0</Version>
 	  <Copyright>Copyright © OnInitiative.com</Copyright>
 	  <ApplicationIcon>nuget_logo.ico</ApplicationIcon>
   </PropertyGroup>
