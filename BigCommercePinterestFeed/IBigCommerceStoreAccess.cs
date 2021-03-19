@@ -10,19 +10,15 @@ namespace BigCommercePinterestFeed
         string CategoriesCSVPath { get; set; }
         string CredentialsFilePath { get; set; }
         string PinterestCatalogCSVPath { get; set; }
-
-        string formatCategoryName(string source);
-        string GetAdditionalImageLinks(List<BigCommerceImage> productNotThumbnailImagesList);
-        string GetAvailability(string bc_availability);
+        
         List<BigCommerceCategory> GetCategories();
         List<CSV_CategoriesWithGoogleClassifications> GetCategoriesWithGoogleClassification();
-        List<BigCommerceProduct> GetProducts();
-        string GetSalePrice(decimal? sale_price, decimal? price);
+        List<BigCommerceProduct> GetProducts();        
         string GetStoreDomain();
         string GetStoreName();
         string GetStoreSafeURL();
         bool IsBigCommerceWithGoogleCategoryFileLatest(List<CSV_CategoriesWithGoogleClassifications> catBCGoogleList, List<BigCommerceCategory> bcCategoriesList);
-        string StripHTML(string source);
+        void SaveProducts(string storeSafeURL, List<BigCommerceProduct> productsList, List<BigCommerceCategory> bigCommerceCategories, List<CSV_CategoriesWithGoogleClassifications> catBCGoogleList, string pinterestCatalogCSVPath);
         Task<bool> UploadBigCommerceCatalogAsync(string catalogFilePath);
     }
 }

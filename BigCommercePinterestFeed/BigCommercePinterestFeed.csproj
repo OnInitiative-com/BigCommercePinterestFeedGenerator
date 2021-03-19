@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-	  <PackageVersion>1.6.0</PackageVersion>
+	  <PackageVersion>1.7.0</PackageVersion>
 	  <PackageDescription>Creates CSV file with the BigCommerce store's products to be used by Pinterest to populate the catalog. The created file is automatically uploaded to the BigCommerce store's WebDav server.</PackageDescription>
 	  <SignManifests>false</SignManifests>
 	  <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
@@ -12,18 +12,19 @@
 	  <PackageTags>pinterest, bigcommerce</PackageTags>
 	  <Authors>OnInitiative.com</Authors>
 	  <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
-	  <PackageIcon>github_logo.png</PackageIcon>
+	  <PackageIcon>nuget_logo.png</PackageIcon>
 	  <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
 	  <PackageId>BigCommercePinterestFeed</PackageId>
 	  <Company>OnInitiative.com</Company>
 	  <Description>Creates CSV file with the BigCommerce store's products to be used by Pinterest to populate the catalog. The created file is automatically uploaded to the BigCommerce store's WebDav server.</Description>
-	  <AssemblyVersion>1.6.0.0</AssemblyVersion>
-	  <FileVersion>1.6.0.0</FileVersion>
-	  <Version>1.6.0</Version>
+	  <AssemblyVersion>1.7.0.0</AssemblyVersion>
+	  <FileVersion>1.7.0.0</FileVersion>
+	  <Version>1.7.0</Version>
 	  <Copyright>Copyright © OnInitiative.com</Copyright>
+	  <ApplicationIcon>nuget_logo.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="..\..\..\..\OneDrive\Documents\On-Initiative\Website\Marketing\Github\github_logo.png" Link="github_logo.png">
+    <None Include="..\..\..\..\OneDrive\Documents\On-Initiative\Website\Marketing\Github\nuget_logo.png" Link="github_logo.png">
       <PackagePath></PackagePath>
       <Pack>True</Pack>
     </None>
@@ -34,6 +35,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="CsvHelper" Version="26.0.1" />
     <PackageReference Include="LinqToCsv" Version="1.5.0" />
     <PackageReference Include="Netco" Version="1.5.8" />
     <PackageReference Include="WebDav.Client" Version="2.7.0" />

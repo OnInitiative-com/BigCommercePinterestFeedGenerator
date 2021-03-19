@@ -16,6 +16,8 @@ using System.Net;
 using WebDav;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Dynamic;
+using CsvHelper;
 
 namespace BigCommercePinterestFeed
 {
@@ -44,7 +46,7 @@ namespace BigCommercePinterestFeed
         {
             NetcoLogger.LoggerFactory = new NullLoggerFactory();
 
-            var cc = new CsvContext();
+            var cc = new LINQtoCSV.CsvContext();
 
             var csvFileAccess = cc.Read<CSV_StoreCredentialParameters>(this.CredentialsFilePath, new CsvFileDescription { FirstLineHasColumnNames = true, IgnoreUnknownColumns = true }).FirstOrDefault();
 
@@ -86,7 +88,7 @@ namespace BigCommercePinterestFeed
 
                 List<CSV_CategoriesWithGoogleClassifications> catList = new List<CSV_CategoriesWithGoogleClassifications>();
 
-                var cc = new CsvContext();
+                var cc = new LINQtoCSV.CsvContext();
 
                 var csvCategoriesCompleted = cc.Read<CSV_CategoriesWithGoogleClassifications>(this.CategoriesCSVPath, new CsvFileDescription { FirstLineHasColumnNames = true, IgnoreUnknownColumns = true });
 
@@ -147,9 +149,80 @@ namespace BigCommercePinterestFeed
         }
 
         /// <summary>
+        /// Saves Pinterest product's feed to local file.
+        /// </summary>
+        public void SaveProducts(string storeSafeURL, List<BigCommerceProduct> productsList, List<BigCommerceCategory> bigCommerceCategories, List<CSV_CategoriesWithGoogleClassifications> catBCGoogleList, string pinterestCatalogCSVPath)
+        {
+            try
+            {
+
+                if (string.IsNullOrEmpty(storeSafeURL))
+                {
+                    throw new ArgumentException($"'{nameof(storeSafeURL)}' cannot be null or empty.", nameof(storeSafeURL));
+                }
+
+                if (productsList is null)
+                {
+                    throw new ArgumentNullException(nameof(productsList));
+                }
+
+                if (bigCommerceCategories is null)
+                {
+                    throw new ArgumentNullException(nameof(bigCommerceCategories));
+                }
+
+                if (catBCGoogleList is null)
+                {
+                    throw new ArgumentNullException(nameof(catBCGoogleList));
+                }
+
+                if (string.IsNullOrEmpty(pinterestCatalogCSVPath))
+                {
+                    throw new ArgumentException($"'{nameof(pinterestCatalogCSVPath)}' cannot be null or empty.", nameof(pinterestCatalogCSVPath));
+                }
+                //Select only "physical" products that are visible 
+                List<BigCommerceProduct> products = productsList.Where(x => x.ProductType == "physical" && x.IsProductVisible).ToList();
+
+                var prodRecords = new List<dynamic>();
+
+                foreach (var item in products)
+                {
+                    dynamic product = new ExpandoObject();
+
+                    product.id = item.Id;
+                    product.title = item.Name;
+                    product.description = StripHTML(item.Description);
+                    product.link = storeSafeURL + item.Product_URL;
+                    product.price = item.Price;
+                    product.sale_price = GetSalePrice(item.SalePrice, item.Price);
+                    product.availability = GetAvailability(item.Availability);
+                    product.brand = item.BrandName;
+                    product.condition = item.Condition.ToLower();
+                    product.product_type = formatCategoryName(bigCommerceCategories.Where(n => n.Id == item.Categories[0]).FirstOrDefault().Category_URL.Url);
+                    product.google_product_category = catBCGoogleList.Where(x => Int32.Parse(x.Id) == item.Categories[0]).FirstOrDefault().GoogleProductCategory;
+                    product.image_link = item.ThumbnailImageURL.StandardUrl;
+                    product.additional_image_link = GetAdditionalImageLinks(item.Main_Images.Where(x => (!x.IsThumbnail)).ToList());
+
+                    prodRecords.Add(product);
+                }
+
+                using (var writer = new StreamWriter(pinterestCatalogCSVPath))
+                using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+                {
+                    csv.WriteRecords(prodRecords);
+                    csv.Flush();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        /// <summary>
         /// Gets the list of additional images of a given product.
         /// </summary>
-        public string GetAdditionalImageLinks(List<BigCommerceImage> productNotThumbnailImagesList)
+        static string GetAdditionalImageLinks(List<BigCommerceImage> productNotThumbnailImagesList)
         {
             if (productNotThumbnailImagesList.Count == 0)
                 return String.Empty;
@@ -209,7 +282,7 @@ namespace BigCommercePinterestFeed
         /// <summary>
         /// Removes HTML from string with Regex.
         /// </summary>
-        public string StripHTML(string source)
+        static string StripHTML(string source)
         {
             return Regex.Replace(source, "<.*?>", string.Empty);
         }
@@ -217,7 +290,7 @@ namespace BigCommercePinterestFeed
         /// <summary>
         /// Gets Pinterest Sale Price.
         /// </summary>
-        public string GetSalePrice(decimal? sale_price, decimal? price)
+        static string GetSalePrice(decimal? sale_price, decimal? price)
         {
 
             string final_price = String.Empty;
@@ -233,7 +306,7 @@ namespace BigCommercePinterestFeed
         /// <summary>
         /// Get Availability's Pinterest parameter value.
         /// </summary>
-        public string GetAvailability(string bc_availability)
+        static string GetAvailability(string bc_availability)
         {
 
             string final_value = String.Empty;
@@ -251,7 +324,7 @@ namespace BigCommercePinterestFeed
         /// <summary>
         /// Format to Pinterest category standard name.
         /// </summary>
-        public string formatCategoryName(string source)
+        static string formatCategoryName(string source)
         {
             TextInfo myTI = new CultureInfo("en-US", false).TextInfo;
             string categoryNameInCaps = myTI.ToTitleCase(source);
@@ -270,7 +343,7 @@ namespace BigCommercePinterestFeed
         {
             try
             {
-                var cc = new CsvContext();
+                var cc = new LINQtoCSV.CsvContext();
 
                 var csvFileAccess = cc.Read<CSV_StoreCredentialParameters>(this.CredentialsFilePath, new CsvFileDescription { FirstLineHasColumnNames = true, IgnoreUnknownColumns = true }).FirstOrDefault();
 
