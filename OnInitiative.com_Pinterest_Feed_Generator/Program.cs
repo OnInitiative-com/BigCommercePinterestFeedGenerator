@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BigCommerceAccess.Models.Product;
-using BigCommerceAccess.Models.Category;
 using System.IO;
 using System.Dynamic;
 using CsvHelper;
 using System.Globalization;
+using BigCommerceAccess.Models.Product;
+using BigCommerceAccess.Models.Category;
+using BigCommercePinterestFeed;
 
-namespace OnInitiative.com_Pinterest_Feed_Generator
+namespace TestProject
 {
     class Program
     {
@@ -35,7 +36,7 @@ namespace OnInitiative.com_Pinterest_Feed_Generator
                 bool categoryFileExists = File.Exists(BCAccess.CategoriesCSVPath);
 
                 //Get only BigCommerce categories that are visible
-                List<BigCommerceCategory> categories = BCAccess.GetCategoriesV3().Where(x => x.IsVisible).ToList();
+                List<BigCommerceCategory> categories = BCAccess.GetCategories().Where(x => x.IsVisible).ToList();
 
                 if (!categoryFileExists)
                 {
@@ -83,7 +84,7 @@ namespace OnInitiative.com_Pinterest_Feed_Generator
                     throw new Exception("BigcommerceCategoriesCSV file is not current. Please update.");
 
                 //Select only "physical" products that are visible 
-                List<BigCommerceProduct> products = BCAccess.GetProductsV3().Where(x => x.ProductType == "physical" && x.IsProductVisible).ToList();
+                List<BigCommerceProduct> products = BCAccess.GetProducts().Where(x => x.ProductType == "physical" && x.IsProductVisible).ToList();
 
                 var prodRecords = new List<dynamic>();
 

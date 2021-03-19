@@ -17,9 +17,9 @@ using WebDav;
 using System.Net.Http;
 using System.Net.Http.Headers;
 
-namespace OnInitiative.com_Pinterest_Feed_Generator
+namespace BigCommercePinterestFeed
 {
-    internal class BigCommerceStoreAccess : IBigCommerceStoreAccess
+    public class BigCommerceStoreAccess : IBigCommerceStoreAccess
     {
 
         private readonly IBigCommerceFactory BigCommerceFactory = new BigCommerceFactory();
@@ -57,7 +57,7 @@ namespace OnInitiative.com_Pinterest_Feed_Generator
         /// <summary>
         /// Gets the list of Products from the BigCommerce store.
         /// </summary>
-        public List<BigCommerceProduct> GetProductsV3()
+        public List<BigCommerceProduct> GetProducts()
         {
             var service = this.BigCommerceFactory.CreateProductsService(this.ConfigV3);
             List<BigCommerceProduct> products = service.GetProducts(true);
@@ -68,7 +68,7 @@ namespace OnInitiative.com_Pinterest_Feed_Generator
         /// <summary>
         /// Gets the list of Categories from the BigCommerce store.
         /// </summary>
-        public List<BigCommerceCategory> GetCategoriesV3()
+        public List<BigCommerceCategory> GetCategories()
         {
             var service = this.BigCommerceFactory.CreateCategoriesService(this.ConfigV3);
             List<BigCommerceCategory> categories = service.GetCategories();

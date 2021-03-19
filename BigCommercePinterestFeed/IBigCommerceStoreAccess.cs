@@ -3,7 +3,7 @@ using BigCommerceAccess.Models.Product;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace OnInitiative.com_Pinterest_Feed_Generator
+namespace BigCommercePinterestFeed
 {
     public interface IBigCommerceStoreAccess
     {
@@ -14,9 +14,9 @@ namespace OnInitiative.com_Pinterest_Feed_Generator
         string formatCategoryName(string source);
         string GetAdditionalImageLinks(List<BigCommerceImage> productNotThumbnailImagesList);
         string GetAvailability(string bc_availability);
-        List<BigCommerceCategory> GetCategoriesV3();
+        List<BigCommerceCategory> GetCategories();
         List<CSV_CategoriesWithGoogleClassifications> GetCategoriesWithGoogleClassification();
-        List<BigCommerceProduct> GetProductsV3();
+        List<BigCommerceProduct> GetProducts();
         string GetSalePrice(decimal? sale_price, decimal? price);
         string GetStoreDomain();
         string GetStoreName();

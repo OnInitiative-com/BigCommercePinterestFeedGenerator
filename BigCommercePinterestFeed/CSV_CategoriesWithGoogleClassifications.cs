@@ -1,6 +1,6 @@
 ﻿using LINQtoCSV;
 
-namespace OnInitiative.com_Pinterest_Feed_Generator
+namespace BigCommercePinterestFeed
 {
 	public class CSV_CategoriesWithGoogleClassifications
 	{
