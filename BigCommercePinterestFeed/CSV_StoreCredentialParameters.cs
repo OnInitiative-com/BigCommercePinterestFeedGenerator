@@ -2,8 +2,10 @@
 
 namespace BigCommercePinterestFeed
 {
-	//This class will store the columns from the CSV file that contains
-	//auth credentials and other important parameters for the job to work.
+
+	/// <summary>
+	/// Stores BigCommerce credentials and other config parameters.
+	/// </summary>
 	internal class CSV_StoreCredentialParameters
 	{
 		[CsvColumn(Name = "ApiKey", FieldIndex = 1)]

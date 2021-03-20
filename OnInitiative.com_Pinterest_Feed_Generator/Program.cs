@@ -24,8 +24,7 @@ namespace TestProject
             {
                 BigCommerceStoreAccess BCAccess = new BigCommerceStoreAccess();
 
-                //Config initial paramaters
-                BCAccess.CredentialsFilePath = Directory.GetCurrentDirectory() + "\\BigCommerceCredentials.csv";
+                //Config general paramaters                
                 BCAccess.CategoriesCSVPath = Directory.GetCurrentDirectory() + "\\BigCommerceCategoriesCSV.csv";
                 BCAccess.PinterestCatalogCSVPath = Directory.GetCurrentDirectory() + "\\products.csv";
 
