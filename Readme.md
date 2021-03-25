@@ -5,7 +5,6 @@
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/OnInitiative-com/BigCommercePinterestFeedGenerator/issues)
 [![Repo Size](https://img.shields.io/github/repo-size/OnInitiative-com/BigCommercePinterestFeedGenerator)](#)
 [![License](https://img.shields.io/github/license/OnInitiative-com/BigCommercePinterestFeedGenerator)](#)
-<img alt="ViewCount" src="https://views.whatilearened.today/views/github/OnInitiative-com/BigCommercePinterestFeedGenerator.svg">
 <a href="https://twitter.com/intent/tweet?text=Wow:&url=https%3A%2F%2Fgithub.com%2FOnInitiative-com%2FBigCommercePinterestFeedGenerator"><img alt="Twitter" src="https://img.shields.io/twitter/url?style=social&url=https%3A%2F%2Ftwitter.com%2FOninitiativeC"></a>
 
   BigCommerce-Pinterest-Feed-Generator is the first open source feed generator for Pinterest that uses data
