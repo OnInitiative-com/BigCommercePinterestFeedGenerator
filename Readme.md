@@ -1,6 +1,7 @@
 # BigCommerce-Pinterest-Feed-Generator
 
 <a href="https://github.com/OnInitiative-com/BigCommercePinterestFeedGenerator"><img alt="GitHub Clones" src="https://img.shields.io/badge/dynamic/json?color=success&label=Clones&query=count&url=https://raw.githubusercontent.com/OnInitiative-com/BigCommercePinterestFeedGenerator/master/clone.json?raw=True&logo=github"></a>
+![Nuget](https://img.shields.io/nuget/dt/BigCommercePinterestFeed.svg)
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/OnInitiative-com/BigCommercePinterestFeedGenerator/issues)
 [![Repo Size](https://img.shields.io/github/repo-size/OnInitiative-com/BigCommercePinterestFeedGenerator)](#)
 [![License](https://img.shields.io/github/license/OnInitiative-com/BigCommercePinterestFeedGenerator)](#)
@@ -25,7 +26,7 @@ The solution uses an enhanced version of [skuvault/bigCommerceAccess](https://gi
 The modified library fully recognizes the license granted by their original authors, and can be accessed
 from the [modified BigCommerceAccess repository](https://github.com/OnInitiative-com/bigCommerceAccess) implemented by our team.
 
-## Ask us any questions or request support now 👋:
+## Ask us any questions or request support now: <img src="https://media.giphy.com/media/hvRJCLFzcasrR4ia7z/giphy.gif" width="25px">
 
 Contact us at [support@oninitiative.com](mailto:support@oninitiative.com) for more information.
 
