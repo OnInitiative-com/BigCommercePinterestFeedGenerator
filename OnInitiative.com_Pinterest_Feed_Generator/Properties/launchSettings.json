@@ -1,8 +1,7 @@
 {
   "profiles": {
     "BigCommercePinterestFeedGenerator": {
-      "commandName": "Executable",
-      "executablePath": "C:\\Users\\jalug\\source\\repos\\OnInitiative.com_Pinterest_Feed_Generator\\OnInitiative.com_Pinterest_Feed_Generator\\bin\\Debug\\BigCommercePinterestFeedGenerator.exe"
+      "commandName": "Project"
     }
   }
 }

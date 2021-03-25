@@ -83,7 +83,7 @@ namespace TestProject
 
                 if (!isBigcommerceCategoriesCSVCurrent)
                     throw new Exception("BigcommerceCategoriesCSV file is not current. Please update.");
-                
+
                 //Saving Pinterest product's feed to local file
                 BCAccess.SaveProducts(storeSafeURL, BCAccess.GetProducts(), categories, catBCGoogleList, BCAccess.PinterestCatalogCSVPath);
 
@@ -104,8 +104,8 @@ namespace TestProject
             }
             finally
             {
-               sb.Clear();                
+                sb.Clear();
             }
-        }        
+        }
     }
 }

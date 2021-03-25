@@ -18,6 +18,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Dynamic;
 using CsvHelper;
+using System.Web;
 
 namespace BigCommercePinterestFeed
 {
@@ -215,12 +216,21 @@ namespace BigCommercePinterestFeed
             return storeSafeURL;
         }
 
+
+        /// <summary>
+        /// Returns string in UTF-8 format.
+        /// </summary>
+        static string ToUTF8(string text)
+        {
+            return Encoding.UTF8.GetString(Encoding.Default.GetBytes(text));
+        }
+
         /// <summary>
         /// Removes HTML from string with Regex.
         /// </summary>
         static string StripHTML(string source)
-        {
-            return Regex.Replace(source, "<.*?>", string.Empty);
+        {            
+            return HttpUtility.HtmlDecode(Regex.Replace(source, @"<[^>]+>|\n", "").Trim());            
         }
 
         /// <summary>
@@ -315,7 +325,7 @@ namespace BigCommercePinterestFeed
 
                     product.id = item.Id;
                     product.title = item.Name;
-                    product.description = StripHTML(item.Description);
+                    product.description = ToUTF8(StripHTML(item.Description));
                     product.link = storeSafeURL + item.Product_URL;
                     product.price = item.Price;
                     product.sale_price = GetSalePrice(item.SalePrice, item.Price);
@@ -331,7 +341,7 @@ namespace BigCommercePinterestFeed
                 }
 
                 using (var writer = new StreamWriter(pinterestCatalogCSVPath))
-                using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture))
+                using (var csv = new CsvWriter(writer, CultureInfo.CurrentCulture = new CultureInfo("en-US")))
                 {
                     csv.WriteRecords(prodRecords);
                     csv.Flush();
