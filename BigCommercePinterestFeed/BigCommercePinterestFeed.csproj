@@ -3,26 +3,26 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
 	  <PackageVersion>2.1.0</PackageVersion>
-	  <PackageDescription>Creates CSV file with the BigCommerce store's products to be used by Pinterest to populate the catalog. Allows files to be uploaded to the BigCommerce WebDav server.</PackageDescription>
+	  <PackageDescription>Product feed generator for stores powered by BigCommerce. Generates CSV file formatted for the Pinterest catalog. The files can be uploaded to a WebDav server location. Sends notification emails.</PackageDescription>
 	  <SignManifests>true</SignManifests>
 	  <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 	  <PackageProjectUrl>https://github.com/OnInitiative-com/BigCommercePinterestFeedGenerator</PackageProjectUrl>
-	  <RepositoryUrl></RepositoryUrl>
+	  <RepositoryUrl>https://github.com/OnInitiative-com/BigCommercePinterestFeedGenerator</RepositoryUrl>
 	  <RepositoryType>GitHub</RepositoryType>
 	  <PackageTags>pinterest, bigcommerce</PackageTags>
 	  <Authors>OnInitiative.com</Authors>
 	  <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
 	  <PackageIcon>nuget_logo.png</PackageIcon>
-	  <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+	  <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 	  <GenerateDocumentationFile>true</GenerateDocumentationFile>
 	  <PackageId>BigCommercePinterestFeed</PackageId>
 	  <Company>OnInitiative.com</Company>
-	  <Description>Product feed generator for stores powered by BigCommerce. Generates CSV file formatted for the Pinterest catalog. The files can be uploaded to a WebDav server location. Sends notification emails.</Description>
 	  <AssemblyVersion>2.1.0.0</AssemblyVersion>
 	  <FileVersion>2.1.0.0</FileVersion>
 	  <Version>2.1.0</Version>
 	  <Copyright>Copyright © OnInitiative.com</Copyright>
 	  <ApplicationIcon>nuget_logo.ico</ApplicationIcon>
+	  <Description>Product feed generator for stores powered by BigCommerce. Generates CSV file formatted for the Pinterest catalog. The files can be uploaded to a WebDav server location. Sends notification emails.</Description>
   </PropertyGroup>
   <ItemGroup>
     <None Include="..\..\..\..\OneDrive\Documents\On-Initiative\Website\Marketing\Github\nuget_logo.png" Link="github_logo.png">
