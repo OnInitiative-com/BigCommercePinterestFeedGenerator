@@ -59,7 +59,7 @@ namespace BigCommercePinterestFeed
         /// <summary>
         /// Implements how to save the products catalog feed to a local file.
         /// </summary>
-        void SaveProducts(string storeSafeURL, List<BigCommerceProduct> productsList, List<BigCommerceCategory> bigCommerceCategories, List<CSV_CategoriesWithGoogleClassifications> catBCGoogleList, string pinterestCatalogCSVPath);
+        void SaveProducts(List<BigCommerceProduct> productsList, List<BigCommerceCategory> bigCommerceCategories, List<CSV_CategoriesWithGoogleClassifications> catBCGoogleList, string pinterestCatalogCSVPath);
 
         /// <summary>
         /// Implements how to upload the products catalog feed to the BigCommerce WebDav server.

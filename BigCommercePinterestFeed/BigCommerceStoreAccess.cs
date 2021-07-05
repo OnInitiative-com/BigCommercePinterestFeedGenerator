@@ -9,7 +9,6 @@ using BigCommerceAccess.Models.Configuration;
 using BigCommerceAccess.Models.Product;
 using BigCommerceAccess.Models.Category;
 using LINQtoCSV;
-using Netco.Logging;
 using System.Text.RegularExpressions;
 using System.Text;
 using System.Net;
@@ -29,8 +28,11 @@ namespace BigCommercePinterestFeed
     {
 
         private readonly IBigCommerceFactory BigCommerceFactory = new BigCommerceFactory();
-        private BigCommerceConfig ConfigV3;     
+
+        private BigCommerceConfig ConfigV3;
         private string credentialsFilePath;
+
+        EMailNotification mailObj;
 
         /// <summary>
         /// Gets or Sets the BigCommerce categories file path.
@@ -43,25 +45,46 @@ namespace BigCommercePinterestFeed
         public string PinterestCatalogCSVPath { get; set; }
 
         /// <summary>
+        /// Gets or Sets the Pinterest's feed file name.
+        /// </summary>
+        public string FeedFileName { get; set; }
+
+        /// <summary>
+        /// Gets or Sets EMailNotification created object instance.
+        /// </summary>
+        public EMailNotification MailObj { get => mailObj; set => mailObj = value; }
+
+        /// <summary>
         /// Initializes a new instance of the BigCommerceStoreAccess class. 
         /// Establishes the connection to the store using the credentials 
         /// provided within the CSV configuration file.
         /// </summary>
-        public BigCommerceStoreAccess()
+        public BigCommerceStoreAccess(string execPath)
         {
-            NetcoLogger.LoggerFactory = new NullLoggerFactory();
-
-            string credentialsFilePath = Directory.GetCurrentDirectory() + "\\BigCommerceCredentials.csv";
-
-            var cc = new LINQtoCSV.CsvContext();
-
-            var csvFileAccess = cc.Read<CSV_StoreCredentialParameters>(credentialsFilePath, new CsvFileDescription { FirstLineHasColumnNames = true, IgnoreUnknownColumns = true }).FirstOrDefault();
-
-            if (csvFileAccess != null)
+            try
             {
-                this.ConfigV3 = new BigCommerceConfig(csvFileAccess.ShortShopName, csvFileAccess.ClientId, csvFileAccess.ClientSecret, csvFileAccess.ApiKey);
-                this.credentialsFilePath = credentialsFilePath;
+
+                string credentialsFilePath = execPath + "\\BigCommerceCredentials.csv";
+
+                var cc = new LINQtoCSV.CsvContext();
+
+                var csvFileAccess = cc.Read<CSV_StoreCredentialParameters>(credentialsFilePath, new CsvFileDescription { FirstLineHasColumnNames = true, IgnoreUnknownColumns = true }).FirstOrDefault();
+
+                if (csvFileAccess != null)
+                {
+                    this.ConfigV3 = new BigCommerceConfig(csvFileAccess.ShortShopName, csvFileAccess.ClientId, csvFileAccess.ClientSecret, csvFileAccess.ApiKey);
+                    this.credentialsFilePath = credentialsFilePath;
+                    this.FeedFileName = csvFileAccess.FeedFileName;
+
+                    this.MailObj = new EMailNotification(csvFileAccess.MailSMTPAddress, Convert.ToInt32(csvFileAccess.MailPort), csvFileAccess.FromEMail,
+                                                    csvFileAccess.MailPassword, csvFileAccess.MailToAddress);
+                }
             }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+
         }
 
         /// <summary>
@@ -93,7 +116,6 @@ namespace BigCommercePinterestFeed
         {
             try
             {
-
                 List<CSV_CategoriesWithGoogleClassifications> catList = new List<CSV_CategoriesWithGoogleClassifications>();
 
                 var cc = new LINQtoCSV.CsvContext();
@@ -154,7 +176,7 @@ namespace BigCommercePinterestFeed
             //check keys and values for equality
             return (BCGoogleCatDictionary.Keys.SequenceEqual(BCCatDictionary.Keys) && BCGoogleCatDictionary.Keys.All(k => BCGoogleCatDictionary[k].SequenceEqual(BCCatDictionary[k])));
 
-        }        
+        }
 
         /// <summary>
         /// Gets the list of additional images of a given product.
@@ -229,8 +251,8 @@ namespace BigCommercePinterestFeed
         /// Removes HTML from string with Regex.
         /// </summary>
         static string StripHTML(string source)
-        {            
-            return HttpUtility.HtmlDecode(Regex.Replace(source, @"<[^>]+>|\n", "").Trim());            
+        {
+            return HttpUtility.HtmlDecode(Regex.Replace(source, @"<[^>]+>|\n", "").Trim());
         }
 
         /// <summary>
@@ -285,15 +307,10 @@ namespace BigCommercePinterestFeed
         /// <summary>
         /// Saves Pinterest product's feed to local file.
         /// </summary>
-        public void SaveProducts(string storeSafeURL, List<BigCommerceProduct> productsList, List<BigCommerceCategory> bigCommerceCategories, List<CSV_CategoriesWithGoogleClassifications> catBCGoogleList, string pinterestCatalogCSVPath)
+        public void SaveProducts(List<BigCommerceProduct> productsList, List<BigCommerceCategory> bigCommerceCategories, List<CSV_CategoriesWithGoogleClassifications> catBCGoogleList, string pinterestCatalogCSVPath)
         {
             try
             {
-
-                if (string.IsNullOrEmpty(storeSafeURL))
-                {
-                    throw new ArgumentException($"'{nameof(storeSafeURL)}' cannot be null or empty.", nameof(storeSafeURL));
-                }
 
                 if (productsList is null)
                 {
@@ -317,6 +334,8 @@ namespace BigCommercePinterestFeed
                 //Select only "physical" products that are visible 
                 List<BigCommerceProduct> products = productsList.Where(x => x.ProductType == "physical" && x.IsProductVisible).ToList();
 
+                string storeURL = GetStoreSafeURL();
+
                 var prodRecords = new List<dynamic>();
 
                 foreach (var item in products)
@@ -326,7 +345,7 @@ namespace BigCommercePinterestFeed
                     product.id = item.Id;
                     product.title = item.Name;
                     product.description = ToUTF8(StripHTML(item.Description));
-                    product.link = storeSafeURL + item.Product_URL;
+                    product.link = storeURL + item.Product_URL;
                     product.price = item.Price;
                     product.sale_price = GetSalePrice(item.SalePrice, item.Price);
                     product.availability = GetAvailability(item.Availability);
@@ -378,10 +397,15 @@ namespace BigCommercePinterestFeed
                         // Content headers need to be set directly on HttpContent instance.
                         var content = new StreamContent(File.OpenRead(catalogFilePath));
                         content.Headers.ContentRange = new ContentRangeHeaderValue(0, 2);
-                        var result = await client.PutFile(csvFileAccess.WebDavPath + "/content/" + csvFileAccess.PinterestFeedFileName, File.OpenRead(catalogFilePath), "text/csv"); // upload resource
-                    }
+                        WebDavResponse result = await client.PutFile(csvFileAccess.WebDavPath + "/content/" + csvFileAccess.FeedFileName, File.OpenRead(catalogFilePath), "text/csv"); // upload resource
 
-                    return true;
+                        if (result.IsSuccessful)
+                        {
+                            return true;
+                        }
+                        else
+                            throw new Exception("UploadBigCommerceCatalogAsync -> " + result.Description);
+                    }
                 }
 
                 throw new Exception("UploadBigCommerceCatalogAsync -> Could not read the authentication file.");

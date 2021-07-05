@@ -29,7 +29,22 @@ namespace BigCommercePinterestFeed
 		[CsvColumn(Name = "WebDavPassword", FieldIndex = 7)]
 		public string WebDavPassword { get; set; }
 
-		[CsvColumn(Name = "PinterestFeedFileName", FieldIndex = 8)]
-		public string PinterestFeedFileName { get; set; }
+		[CsvColumn(Name = "FeedFileName", FieldIndex = 8)]
+		public string FeedFileName { get; set; }
+
+		[CsvColumn(Name = "MailSMTPAddress", FieldIndex = 9)]
+		public string MailSMTPAddress { get; set; }
+
+		[CsvColumn(Name = "MailPort", FieldIndex = 10)]
+		public string MailPort { get; set; }
+
+		[CsvColumn(Name = "FromEMail", FieldIndex = 11)]
+		public string FromEMail { get; set; }
+
+		[CsvColumn(Name = "MailPassword", FieldIndex = 12)]
+		public string MailPassword { get; set; }
+
+		[CsvColumn(Name = "MailToAddress", FieldIndex = 13)]
+		public string MailToAddress { get; set; }
 	}
 }

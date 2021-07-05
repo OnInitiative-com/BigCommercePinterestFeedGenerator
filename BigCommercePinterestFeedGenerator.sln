@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestProject", "OnInitiative
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BigCommerceAccess", "..\bigCommerceAccessFork\src\BigCommerceAccess\BigCommerceAccess.csproj", "{2FAF71F9-3AD0-4C45-875F-78CA9F7B2FDA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BigCommercePinterestFeed", "BigCommercePinterestFeed\BigCommercePinterestFeed.csproj", "{A2827786-88BD-4556-B6AC-D98282B79815}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BigCommercePinterestFeed", "BigCommercePinterestFeed\BigCommercePinterestFeed.csproj", "{A2827786-88BD-4556-B6AC-D98282B79815}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,16 +17,16 @@ Global
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{8BAE0BA6-9F19-469E-BE15-A4F63AEAF68C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8BAE0BA6-9F19-469E-BE15-A4F63AEAF68C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8BAE0BA6-9F19-469E-BE15-A4F63AEAF68C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8BAE0BA6-9F19-469E-BE15-A4F63AEAF68C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8BAE0BA6-9F19-469E-BE15-A4F63AEAF68C}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{8BAE0BA6-9F19-469E-BE15-A4F63AEAF68C}.Release|Any CPU.Build.0 = Debug|Any CPU
 		{2FAF71F9-3AD0-4C45-875F-78CA9F7B2FDA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2FAF71F9-3AD0-4C45-875F-78CA9F7B2FDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2FAF71F9-3AD0-4C45-875F-78CA9F7B2FDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2FAF71F9-3AD0-4C45-875F-78CA9F7B2FDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2FAF71F9-3AD0-4C45-875F-78CA9F7B2FDA}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{2FAF71F9-3AD0-4C45-875F-78CA9F7B2FDA}.Release|Any CPU.Build.0 = Debug|Any CPU
 		{A2827786-88BD-4556-B6AC-D98282B79815}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A2827786-88BD-4556-B6AC-D98282B79815}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A2827786-88BD-4556-B6AC-D98282B79815}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A2827786-88BD-4556-B6AC-D98282B79815}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2827786-88BD-4556-B6AC-D98282B79815}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2827786-88BD-4556-B6AC-D98282B79815}.Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

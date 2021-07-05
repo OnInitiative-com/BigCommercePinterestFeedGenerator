@@ -17,18 +17,27 @@ namespace TestProject
         static async Task Main(string[] args)
         {
             StringBuilder sb = new StringBuilder();
-            String pathFile = Directory.GetCurrentDirectory() + "\\PinterestCatalog_JobLog.txt";
+
+            //get the execution path of the application
+            var execPath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase)?.Replace("file:\\", "");
+
+            String pathFile = execPath + "\\BCCatalog_JobLog.txt";
             String dateAndTime = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
+
+            EMailNotification mailObj = null;
+            string storeName = String.Empty;
 
             try
             {
-                BigCommerceStoreAccess BCAccess = new BigCommerceStoreAccess();
+                BigCommerceStoreAccess BCAccess = new BigCommerceStoreAccess(execPath);
+
+                mailObj = BCAccess.MailObj;
 
                 //Config general paramaters                
-                BCAccess.CategoriesCSVPath = Directory.GetCurrentDirectory() + "\\BigCommerceCategoriesCSV.csv";
-                BCAccess.PinterestCatalogCSVPath = Directory.GetCurrentDirectory() + "\\products.csv";
+                BCAccess.CategoriesCSVPath = execPath + "\\BigCommerceCategoriesCSV.csv";
+                BCAccess.PinterestCatalogCSVPath = execPath + "\\" + BCAccess.FeedFileName;
 
-                var storeName = BCAccess.GetStoreName();
+                storeName = BCAccess.GetStoreName();
                 var storeDomain = BCAccess.GetStoreDomain();
                 var storeSafeURL = BCAccess.GetStoreSafeURL();
 
@@ -85,7 +94,7 @@ namespace TestProject
                     throw new Exception("BigcommerceCategoriesCSV file is not current. Please update.");
 
                 //Saving Pinterest product's feed to local file
-                BCAccess.SaveProducts(storeSafeURL, BCAccess.GetProducts(), categories, catBCGoogleList, BCAccess.PinterestCatalogCSVPath);
+                BCAccess.SaveProducts(BCAccess.GetProducts(), categories, catBCGoogleList, BCAccess.PinterestCatalogCSVPath);
 
                 //Uploading BigCommerce products CSV file to WebDav Server
                 bool uploadSuccessful = await BCAccess.UploadBigCommerceCatalogAsync(BCAccess.PinterestCatalogCSVPath);
@@ -101,6 +110,10 @@ namespace TestProject
             {
                 sb.Append(dateAndTime + " ERROR: " + ex.Message + "\n");
                 File.AppendAllText(pathFile, sb.ToString());
+
+                //send email notification
+                if (mailObj != null)
+                    mailObj.SendNotification(storeName, "Pinterest Feed Upload Issues", sb.ToString());
             }
             finally
             {
