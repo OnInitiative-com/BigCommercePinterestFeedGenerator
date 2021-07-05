@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-	  <PackageVersion>2.0.0</PackageVersion>
+	  <PackageVersion>2.1.0</PackageVersion>
 	  <PackageDescription>Creates CSV file with the BigCommerce store's products to be used by Pinterest to populate the catalog. Allows files to be uploaded to the BigCommerce WebDav server.</PackageDescription>
 	  <SignManifests>true</SignManifests>
 	  <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
