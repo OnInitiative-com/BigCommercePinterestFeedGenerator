@@ -1,6 +1,6 @@
 # BigCommerce-Pinterest-Feed-Generator
 
-<a href="https://github.com/OnInitiative-com/BigCommercePinterestFeedGenerator"><img alt="GitHub Clones" src="https://img.shields.io/badge/dynamic/json?color=success&label=Clones&query=count&url=https://raw.githubusercontent.com/OnInitiative-com/BigCommercePinterestFeedGenerator/master/clone.json?raw=True&logo=github"></a>
+<a href="https://github.com/OnInitiative-com/BigCommercePinterestFeedGenerator"><img alt="GitHub Last 15 days Clones" src="https://img.shields.io/badge/dynamic/json?color=success&label=Clones&query=count&url=https://raw.githubusercontent.com/OnInitiative-com/BigCommercePinterestFeedGenerator/master/clone.json?raw=True&logo=github"></a>
 ![Nuget](https://img.shields.io/nuget/dt/BigCommercePinterestFeed.svg)
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/OnInitiative-com/BigCommercePinterestFeedGenerator/issues)
 [![Repo Size](https://img.shields.io/github/repo-size/OnInitiative-com/BigCommercePinterestFeedGenerator)](#)
